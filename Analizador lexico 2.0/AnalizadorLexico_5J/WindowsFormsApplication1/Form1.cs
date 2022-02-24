@@ -21,25 +21,25 @@ namespace WindowsFormsApplication1
         private void button3_Click(object sender, EventArgs e)
         {
 
-            //   Token1.     Palabra reservada   int, float, double, ....
+            //   Token1.     Palabra reservada   int, float, double, ....//falta
             //   Token2.     Identificador (variable)
             //   Token3.     Numero entero
             //   Token4.     Numero con punto decimal
             //   Token5.     Operador Aritmetico   +  -  *   /  ^   
-            //   Token6.     Operador Relacional   >  >=  <   <=   !=   ==
-            //   Token7.     Operador Logico   &&    ||   ~
+            //   Token6.     Operador Relacional   >  >=  <   <=   !=   ==//falta
+            //   Token7.     Operador Logico   &&    ||   ~//falta
             //   Token8.     Asignacion    =
             //   Token9.     Fin de instruccion     ;
             //   Token10.    Separador    ,
             //   Token11.    Parentesis   (   )
             //   Token12.    Corchetes    [   ]
             //   Token13.    Llaves       {   }
-            //   Token14.    Cadena       "Hola"
-            //   Token15.    Caracter     'z'
+            //   Token14.    Cadena       "Hola"//falta
+            //   Token15.    Caracter     'z'//falta
             //   Token16.    dos puntos  :
             //   Token17.    incremento   ++
             //   Token18.    Decremento   --
-            //   Token19.    Operador aritmetivo inclusivo    +=  -=  *=  /=
+            //   Token19.    Operador aritmetivo inclusivo    +=  -=  *=  /=//falta
             //   Token20.    Punto   .
 
             //Equipo   1    Tokens   3, 9, 11, 13, 18      Juan José Baños.        4:45.  PM
@@ -48,7 +48,7 @@ namespace WindowsFormsApplication1
            string patron2 = @"[a-zA-Z]\w*";      //   Identicador  (Variable
             string patron4 = @"[\+-]?\d+\.\d+";   //   Numero con punto decimal
             string patron3 = @"[\+-]?\d+";        //   numero entero
-            string patron8 = "=";                 //   Asignacion  =
+            string patron8 = @"[=]{1}\w*";                 //   Asignacion  =
             string patron20 = ";";                //   Punto y coma
             string patron16 = ":";                 //dos puntos
             string patron10 = ",";                  //coma
@@ -59,7 +59,7 @@ namespace WindowsFormsApplication1
             string patron11 = @"[\\(|\\)]\w*";       //Parentesis
             string patron12 = @"[\\[|\\\]]\w*";       //Corchetes
             string patron13 = @"[\\{|\\}]\w*";       //Llaves
-            String patron6 = @"[a-zA-Z]\w*+(int|float)"; //operadores relacionales
+            String patron6 = @"[<|>|!|=]+[=]w*;"; //operadores relacionales//esta mal no detecta correctamente
 
             string patron = patron2 + "|" + patron4 + "|" + patron3 + "|" + patron8 + "|" + patron20 + "|" + patron10 + "|" + patron16 + "|" + patron17 + "|" + patron18 + "|" + patron21 + "|" + patron5 + "|" + patron11 + "|" + patron12 + "|" + patron13 + "|" + patron6;
             Regex exp2 = new Regex(patron2);
@@ -122,7 +122,9 @@ namespace WindowsFormsApplication1
                 else if (exp13.IsMatch(match.Value))
                     salida += "Token 13: Llaves ---> " + match.Value + "\r\n";
                 else if (exp6.IsMatch(match.Value))
-                    salida += "Token 6: Operadores relacionales ---> " + match.Value + "\r\n";
+                    salida += "Token 6: Relacional ---> " + match.Value + "\r\n";//esta mal no da el resultado correctamente
+
+
                 match = match.NextMatch();
             }
             txtSalida.Text = salida;
