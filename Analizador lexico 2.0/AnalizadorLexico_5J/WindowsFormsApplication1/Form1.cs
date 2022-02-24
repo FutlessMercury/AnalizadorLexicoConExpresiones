@@ -27,7 +27,7 @@ namespace WindowsFormsApplication1
             //   Token4.     Numero con punto decimal
             //   Token5.     Operador Aritmetico   +  -  *   /  ^   
             //   Token6.     Operador Relacional   >  >=  <   <=   !=   ==//falta
-            //   Token7.     Operador Logico   &&    ||   ~//falta
+            //   Token7.     Operador Logico   &&    ||  
             //   Token8.     Asignacion    =
             //   Token9.     Fin de instruccion     ;
             //   Token10.    Separador    ,
@@ -45,23 +45,24 @@ namespace WindowsFormsApplication1
             //Equipo   1    Tokens   3, 9, 11, 13, 18      Juan José Baños.        4:45.  PM
 
             //VARIABLES UTILIZADAS
-           string patron2 = @"[a-zA-Z]\w*";      //   Identicador  (Variable
-            string patron4 = @"[\+-]?\d+\.\d+";   //   Numero con punto decimal
-            string patron3 = @"[\+-]?\d+";        //   numero entero
-            string patron8 = @"[=]{1}\w*";                 //   Asignacion  =
-            string patron20 = ";";                //   Punto y coma
-            string patron16 = ":";                 //dos puntos
-            string patron10 = ",";                  //coma
-            string patron17 = @"[\+]{2}\w*";       //incremento
-            string patron18 = @"[\-]{2}\w*";       //decremento
-            string patron21 = @"[\\.]\w*";       //punto
-            string patron5 = @"[\+|\-|\*|\/|\^]\w*";       //Operador Aritmetico
-            string patron11 = @"[\\(|\\)]\w*";       //Parentesis
-            string patron12 = @"[\\[|\\\]]\w*";       //Corchetes
-            string patron13 = @"[\\{|\\}]\w*";       //Llaves
-            String patron6 = @"[<|>|!|=]+[=]w*;"; //operadores relacionales//esta mal no detecta correctamente
+           string patron2 = @"[a-zA-Z]\w*"; //Identicador  (Variable)//Antes de la cadena la diagonal invertida no la toma como escape, toma un caracter mayuscula o minuscula de la A a Z,coincide con el caracter palabra 0 o mas veces
+            string patron4 = @"[\+-]?\d+\.\d+"; //Numero con punto decimal//Antes de la cadena la diagonal invertida no la toma como escape,viene el signo + ó - opcional 0 o 1 vez,luego 1 o mas digitos, seguido de un punto, seguido de uno o mas digitos
+            string patron3 = @"[\+-]?\d+";//numero entero //Antes de la cadena la diagonal invertida no la toma como escape,viene el signo + ó - opcional 0 o 1 vez,luego 1 o mas digitos
+            string patron8 = @"[\=]{1}\w*"; // Asignacion  =//Antes de la cadena la diagonal invertida no la toma como escape, viene el signo =, coincide con el caracter palabra 0 o mas veces
+            string patron20 = ";"; //Punto y coma
+            string patron16 = ":"; //dos puntos
+            string patron10 = ","; //coma
+            string patron17 = @"[\+]{2}\w*"; //incremento//Antes de la cadena la diagonal invertida no la toma como escape, viene el signo mas, 2 veces,si coincide con el caracter palabra 0 o mas veces
+            string patron18 = @"[\-]{2}\w*"; //decremento //Antes de la cadena la diagonal invertida no la toma como escape, viene el signo menes, 2 veces,si coincide con el caracter palabra 0 o mas veces
+            string patron21 = @"[\\.]\w*";//punto// Antes de la cadena la diagonal invertida no la toma como escape, viene el caracter punto,si coincide con el caracter palabra 0 o mas veces
+            string patron5 = @"([\+]|[\-]|[\*]|[\/]|[\^])\w*";//Operador Aritmetico //Antes de la cadena la diagonal invertida no la toma como escape, toma el caracter + o el - o el * o el / o el ^,si coincide con el caracter palabra 0 o mas veces
+            string patron11 = @"([\\(]|[\\)])\w*";//Parentesis // Antes de la cadena la diagonal invertida no la toma como escape, toma el parentesis izquierdo o derecho ,si coincide con el caracter palabra 0 o mas veces
+            string patron12 = @"([\\[]|[\\\]])\w*";//Corchetes // Antes de la cadena la diagonal invertida no la toma como escape, toma el corchete izquierdo o derecho ,si coincide con el caracter palabra 0 o mas veces
+            string patron13 = @"([\\{]|[\\}])\w*";//Llaves // Antes de la cadena la diagonal invertida no la toma como escape, toma la llave izquierda o derecha ,si coincide con el caracter palabra 0 o mas veces
+            string patron6 = @"([\&]{2}|[\||]{2}|[~])\w*";//esta bien
+            
 
-            string patron = patron2 + "|" + patron4 + "|" + patron3 + "|" + patron8 + "|" + patron20 + "|" + patron10 + "|" + patron16 + "|" + patron17 + "|" + patron18 + "|" + patron21 + "|" + patron5 + "|" + patron11 + "|" + patron12 + "|" + patron13 + "|" + patron6;
+            string patron = patron2 + "|" + patron4 + "|" + patron3 + "|" + patron8 + "|" + patron20 + "|" + patron10 + "|" + patron16 + "|" + patron17 + "|" + patron18 + "|" + patron21 + "|" + patron5 + "|" + patron11 + "|" + patron12 + "|" + patron13 + "|" + patron6 ;
             Regex exp2 = new Regex(patron2);
             Regex exp4 = new Regex(patron4);
             Regex exp3 = new Regex(patron3);
@@ -77,6 +78,7 @@ namespace WindowsFormsApplication1
             Regex exp12 = new Regex(patron12);
             Regex exp13 = new Regex(patron13);
             Regex exp6 = new Regex(patron6);
+            
 
 
             string signo;
@@ -99,8 +101,6 @@ namespace WindowsFormsApplication1
                     if (match.Value[0] == '-') signo = "negativo";
                     salida += "Token 3: Numero entero " + signo + " ---> " + match.Value + "\r\n";
                 }
-                else if (exp8.IsMatch(match.Value))
-                    salida += "Token 8: Igualdad ---> " + match.Value + "\r\n";
                 else if (exp20.IsMatch(match.Value))
                     salida += "Token 20: Punto y coma ---> " + match.Value + "\r\n";
                 else if (exp16.IsMatch(match.Value))
@@ -122,8 +122,9 @@ namespace WindowsFormsApplication1
                 else if (exp13.IsMatch(match.Value))
                     salida += "Token 13: Llaves ---> " + match.Value + "\r\n";
                 else if (exp6.IsMatch(match.Value))
-                    salida += "Token 6: Relacional ---> " + match.Value + "\r\n";//esta mal no da el resultado correctamente
-
+                    salida += "Token 6: Relacional ---> " + match.Value + "\r\n";
+                else if (exp8.IsMatch(match.Value))
+                    salida += "Token 8: Iguadad ---> " + match.Value + "\r\n";
 
                 match = match.NextMatch();
             }
